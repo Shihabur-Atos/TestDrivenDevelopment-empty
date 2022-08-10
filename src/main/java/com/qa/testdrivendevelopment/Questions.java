@@ -2,6 +2,12 @@ package com.qa.testdrivendevelopment;
 
 public class Questions {
 
+	public static void main(String[] args) {
+		Questions question = new Questions();
+		question.nMid("Hello",3);
+
+	}
+
 	/**
 	 * EXAMPLE: THIS ONE HAS BEEN DONE FOR YOU <br>
 	 * 
@@ -28,7 +34,14 @@ public class Questions {
 	 * multChar("Hi-There") → "HHHiii---TTThhheeerrreee"
 	 */
 	public String multiChar(String input) {
-		return "";
+		StringBuilder result = new StringBuilder();
+		char[] chars = input.toCharArray();
+		for(int i = 0; i < input.length(); i++) {
+			for(int n = 0; n < 3; n++) {
+				result.append(chars[i]);
+			}
+		}
+		return result.toString();
 	}
 
 	/**
@@ -45,6 +58,7 @@ public class Questions {
 	 */
 
 	public String sandwichFilling(String sandwich) {
+
 		return "";
 	}
 
@@ -71,12 +85,14 @@ public class Questions {
 	 * number.<br>
 	 * <br>
 	 * For Example:<br>
-	 * nMid("Hello", 3) → "Ho"<br>
+	 * nMid("Hello", 3) → "Ho"<br> 5 / 2 = 2.5
 	 * nMid("Chocolate", 3) → "Choate"<br>
 	 * nMid("Chocolate", 1) → "Choclate"<br>
 	 */
 	public String nMid(String input, int n) {
-    	return "";
+		int mid = (input.length() / 2) - 1;
+    	input = input.replace(input.substring(mid, mid + n),"");
+		return input;
 	}
 
 	/**
@@ -91,8 +107,14 @@ public class Questions {
 	 * endsJava("javaiscool") → false <br>
 	 * endsJava("pythoniscool") → false <br>
 	 */
+
 	public boolean endsJava(String input) {
-    	return false;
+		input = input.toLowerCase();
+		if(input.endsWith("java")){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -137,8 +159,20 @@ public class Questions {
 	 * fizzBuzz(15) → "fizzbuzz" <br>
 	 * fizzBuzz(8) → null
 	 */
+
+	//if (this condition is true) {
+	// do this
+	//}
 	public String fizzBuzz(int number) {
-    	return "";
+		if (number % 3 == 0 && number % 5 ==0) { // if this is true return fizzbuzz
+			return "fizzbuzz";
+		} else if(number % 3 == 0) { // if the previous condition is not true try this condition now
+			return "fizz";
+		} else if (number % 5 == 0) {
+			return "buzz";
+		} else { // if none of these conditions are true always return null
+			return null;
+		}
 	}
 
 	/**
