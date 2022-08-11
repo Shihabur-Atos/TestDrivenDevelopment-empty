@@ -1,12 +1,12 @@
 package com.qa.testdrivendevelopment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Questions {
-
-	public static void main(String[] args) {
-		Questions question = new Questions();
-		question.nMid("Hello",3);
-
-	}
 
 	/**
 	 * EXAMPLE: THIS ONE HAS BEEN DONE FOR YOU <br>
@@ -58,7 +58,18 @@ public class Questions {
 	 */
 
 	public String sandwichFilling(String sandwich) {
+		final String POINT = "bread";
+		sandwich = sandwich.toLowerCase();
+		StringBuilder output = new StringBuilder();
 
+		if(sandwich.contains(POINT)) {
+			sandwich = sandwich.substring(sandwich.indexOf(POINT), sandwich.lastIndexOf(POINT))
+						.replaceAll(POINT,"");
+			for(int i = sandwich.length() - 1; i >= 0; i--) {
+				output.append(sandwich.charAt(i));
+			}
+			return output.toString();
+		}
 		return "";
 	}
 
@@ -75,7 +86,9 @@ public class Questions {
 	 * evenlySpaced(4, 60, 9) → false
 	 */
 	public boolean evenlySpaced(int a, int b, int c) {
-		return false;
+		int[] arr = {a, b, c};
+		Arrays.sort(arr);
+		return arr[2] - arr[1] == arr[1] - arr[0];
 	}
 
 	/**
@@ -89,11 +102,18 @@ public class Questions {
 	 * nMid("Chocolate", 3) → "Choate"<br>
 	 * nMid("Chocolate", 1) → "Choclate"<br>
 	 */
+
 	public String nMid(String input, int n) {
-		int mid = (input.length() / 2) - 1;
-    	input = input.replace(input.substring(mid, mid + n),"");
-		return input;
+		// 0 1 2 3 4 5 6 7 8
+		// c h o c o l a t e
+		StringBuilder builder = new StringBuilder(input);
+		for(int i = 0; i < n; i++) {
+			int mid = builder.length() / 2;
+			builder.deleteCharAt(mid);
+		}
+		return builder.toString();
 	}
+
 
 	/**
 	 * Given a string, return the boolean True if it ends in "java" and False if
@@ -110,11 +130,7 @@ public class Questions {
 
 	public boolean endsJava(String input) {
 		input = input.toLowerCase();
-		if(input.endsWith("java")){
-			return true;
-		} else {
-			return false;
-		}
+		return input.endsWith("java");
 	}
 
 	/**
@@ -129,7 +145,30 @@ public class Questions {
 	 * HINT: "a" == "a" if false HINT: "a".equals("a") is true
 	 */
 	public int superBlock(String input) {
-    	return -1;
+		int count = 0;
+		ArrayList<Integer> counts = new ArrayList<>();
+		if(input.isEmpty()) {
+			return 0;
+		}
+		for(int i = 0; i < input.length(); i++) {
+			if(i+1 > input.length() - 1) {
+				counts.add(count);
+				break;
+			}
+			if(input.charAt(i) == input.charAt(i+1)) {
+				if(count == 0) {
+					count += 2;
+				} else {
+					count++;
+				}
+			} else {
+				if(count != 0) {
+					counts.add(count);
+					count = 0;
+				}
+			}
+		}
+		return Collections.max(counts);
 	}
 
 	/**
@@ -145,7 +184,15 @@ public class Questions {
 	 * HINT: String.toLowerCase
 	 */
 	public int amISearch(String sentence) {
-    	return -1;
+		int count = 0;
+		sentence = sentence.toLowerCase();
+		String[] words = sentence.split(" ");
+		for(String word : words) {
+			if(word.equals("am")) {
+				count++;
+			}
+		}
+    	return count;
 	}
 
 	/**
@@ -160,9 +207,6 @@ public class Questions {
 	 * fizzBuzz(8) → null
 	 */
 
-	//if (this condition is true) {
-	// do this
-	//}
 	public String fizzBuzz(int number) {
 		if (number % 3 == 0 && number % 5 ==0) { // if this is true return fizzbuzz
 			return "fizzbuzz";
@@ -196,7 +240,17 @@ public class Questions {
 	 */
 
 	public int largest(String input) {
-    	return -1;
+    	String[] nums = input.split(" ");
+		ArrayList<Integer> values = new ArrayList<>();
+		for(String num : nums) {
+			int value = 0;
+			for(int n = 0; n < num.length(); n++) {
+				value += Integer.parseInt(String.valueOf(num.charAt(n)));
+			}
+			values.add(value);
+		}
+		Collections.sort(values);
+		return values.get(values.size() - 1);
 	}
 
 	/**
@@ -213,6 +267,9 @@ public class Questions {
 	 * HINT: String.charAt
 	 */
 	public boolean compares(String word, int index, char letter) {
+		if(index < word.length()) {
+			return word.charAt(index) == letter;
+		}
     	return false;
 	}
 }
